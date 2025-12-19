@@ -5,15 +5,15 @@ const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 export const getStylistAdvice = async (userPrompt: string, history: { role: string, content: string }[]) => {
   try {
-    const chat = ai.models.generateContent({
+    const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: [
         {
           role: "user",
-          parts: [{ text: "Você é um Personal Stylist da loja 'LookUrbano'. Seja amigável, entenda o gosto do cliente e sugira looks baseados no clima, ocasião e tendências brasileiras atuais. Responda em Português do Brasil." }]
+          parts: [{ text: "Você é um Personal Stylist especialista da loja LookUrbano. Seu objetivo é ajudar brasileiros a se vestirem melhor com peças da nossa loja. Sugira combinações, explique por que certas cores funcionam e seja sempre muito educado e antenado com as tendências de 2024/2025. Responda de forma concisa e amigável em Português do Brasil." }]
         },
         ...history.map(h => ({
-          role: h.role,
+          role: h.role === 'assistant' ? 'model' : 'user',
           parts: [{ text: h.content }]
         })),
         {
@@ -22,16 +22,15 @@ export const getStylistAdvice = async (userPrompt: string, history: { role: stri
         }
       ],
       config: {
-        temperature: 0.7,
+        temperature: 0.8,
         topK: 40,
         topP: 0.95,
       }
     });
 
-    const response = await chat;
-    return response.text || "Desculpe, estou com dificuldades para pensar em um look agora. Tente novamente!";
+    return response.text || "Estou analisando as melhores tendências para você... Pode repetir a pergunta?";
   } catch (error) {
     console.error("Gemini Stylist Error:", error);
-    return "Ocorreu um erro ao conectar com o seu Personal Stylist. Verifique sua conexão.";
+    return "Tive um pequeno problema de conexão com as passarelas. Pode tentar novamente em instantes?";
   }
 };
