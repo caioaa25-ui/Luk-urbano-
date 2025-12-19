@@ -4,8 +4,10 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
+// As chaves são lidas das variáveis de ambiente do Netlify (Site Settings > Environment Variables)
+// Isso evita o erro de "Exposed Secrets" detectado pelo scanner de segurança.
 const firebaseConfig = {
-  apiKey: "AIzaSyCJHxvhexOdFNMqGro-YILNhKXl4SFRcw8",
+  apiKey: process.env.API_KEY || "",
   authDomain: "moda-brasil-9c792.firebaseapp.com",
   projectId: "moda-brasil-9c792",
   storageBucket: "moda-brasil-9c792.appspot.com",

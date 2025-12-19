@@ -3,7 +3,6 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import CartDrawer from './components/CartDrawer';
-import AIStylist from './components/AIStylist';
 import Hero from './components/Hero';
 import Auth from './components/Auth';
 import ClientDashboard from './components/ClientDashboard';
@@ -124,8 +123,6 @@ const App: React.FC = () => {
             <ProductList products={MOCK_PRODUCTS} onAddToCart={addToCart} onBuyNow={handleBuyNow} />
           </div>
         )}
-
-        {currentView === 'stylist' && <AIStylist />}
         
         {currentView === 'login' && <Auth mode="login" onSuccess={handleLoginSuccess} onSwitchMode={setCurrentView} />}
         {currentView === 'register' && <Auth mode="register" onSuccess={handleLoginSuccess} onSwitchMode={setCurrentView} />}
@@ -152,7 +149,7 @@ const App: React.FC = () => {
             <h2 className="text-3xl font-bold mb-2">Pedido Recebido!</h2>
             <p className="text-gray-500 mb-8">Seu pagamento está sendo processado.</p>
             <div className="flex flex-col gap-3">
-              <button onClick={() => setCurrentView('client-dashboard')} className="w-full py-4 bg-ml-blue text-white font-bold rounded-lg shadow-md">Meus Pedidos</button>
+              <button onClick={() => setCurrentView('client-dashboard')} className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg shadow-md">Meus Pedidos</button>
               <button onClick={() => setCurrentView('home')} className="w-full py-4 bg-white text-gray-700 font-bold rounded-lg border">Continuar Comprando</button>
             </div>
           </div>

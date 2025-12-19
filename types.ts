@@ -18,7 +18,6 @@ export type UserRole = 'client' | 'partner' | 'admin';
 export type ViewState = 
   | 'home' 
   | 'catalog' 
-  | 'stylist' 
   | 'login' 
   | 'register' 
   | 'client-dashboard' 
@@ -26,11 +25,6 @@ export type ViewState =
   | 'admin-dashboard' 
   | 'checkout' 
   | 'success';
-
-export interface StylistMessage {
-  role: 'user' | 'assistant';
-  content: string;
-}
 
 export interface BankDetails {
   pixKey: string;
@@ -58,4 +52,10 @@ export interface PayoutRequest {
   status: 'pending' | 'approved' | 'rejected';
   date: string;
   pixKey: string;
+}
+
+// Added StylistMessage to fix the import error in AIStylist.tsx
+export interface StylistMessage {
+  role: 'user' | 'assistant';
+  content: string;
 }

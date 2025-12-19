@@ -15,7 +15,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, cartCount, onOpenCart, curr
   return (
     <header className="header-gradient w-full fixed top-0 left-0 z-50 shadow-sm border-b border-yellow-200">
       <div className="max-w-[1200px] mx-auto px-4">
-        {/* Top Row: Logo and Nav Items */}
         <div className="flex items-center justify-between py-3 gap-2">
           <div className="flex items-center gap-4">
             <div 
@@ -45,6 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, cartCount, onOpenCart, curr
                   <i className="fas fa-user-circle text-lg"></i>
                   <span className="hidden sm:inline">Perfil</span>
                 </button>
+                <button onClick={onLogout} className="text-[10px] font-bold text-red-600 uppercase hover:underline">Sair</button>
               </div>
             ) : (
               <button 
@@ -54,18 +54,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, cartCount, onOpenCart, curr
                 ENTRAR
               </button>
             )}
-
-            <button 
-              onClick={() => onNavigate('stylist')} 
-              className="p-2 text-blue-700 hover:rotate-12 transition-transform"
-              title="Personal Stylist IA"
-            >
-              <i className="fas fa-magic text-xl"></i>
-            </button>
           </div>
         </div>
 
-        {/* Search Bar Row (Identical to Mobile Look) */}
         <div className="pb-3 flex gap-2">
           <div className="flex-1 relative">
             <input 

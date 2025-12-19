@@ -1,7 +1,5 @@
 {
-  "name": "LookUrbano - AI Fashion Store",
-  "description": "Uma loja de roupas moderna e sofisticada integrada com IA para consultoria de estilo personalizada e uma experiência de compra fluida.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "name": "LookUrbano - Fashion Store",
+  "description": "Uma loja de roupas moderna e sofisticada com uma experiência de compra fluida e sistema de afiliados profissional.",
+  "requestFramePermissions": []
 }
