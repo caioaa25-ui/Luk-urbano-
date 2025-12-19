@@ -5,79 +5,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#fff159">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="LookUrbano">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050221.png">
-    
-    <title>LookUrbano | Moda Brasileira Profissional</title>
+    <title>LookUrbano | Loja Oficial</title>
     
     <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'ml-blue': '#3483fa',
+              'ml-green': '#00a650',
+              'ml-yellow': '#fff159',
+              'ml-gray': '#f5f5f5',
+            }
+          }
+        }
+      }
+    </script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        :root {
-            --primary-yellow: #fff159;
-            --secondary-blue: #3483fa;
-            --success-green: #00a650;
-            --bg-gray: #f5f5f5;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-gray);
-            color: #333;
+            background-color: #f5f5f5;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
-
-        .header-gradient {
-            background-color: var(--primary-yellow);
-        }
-
-        .card-shadow {
-            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
-        }
-
-        .btn-green {
-            background-color: var(--success-green);
-            color: white;
-            transition: all 0.2s;
-        }
-
-        .btn-green:hover {
-            filter: brightness(1.1);
-            transform: translateY(-1px);
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-        
-        /* Animações de entrada profissionais */
-        .animate-slide-up {
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .header-gradient { background-color: #fff159; }
+        .card-shadow { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1); }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
-<script type="importmap">
+
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "firebase/app": "https://esm.sh/firebase@10.7.1/app",
+    "firebase/auth": "https://esm.sh/firebase@10.7.1/auth",
+    "firebase/firestore": "https://esm.sh/firebase@10.7.1/firestore",
+    "firebase/storage": "https://esm.sh/firebase@10.7.1/storage",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "firebase/": "https://esm.sh/firebase@^12.7.0/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+    "firebase/": "https://esm.sh/firebase@^12.7.0/"
   }
 }
 </script>
 </head>
 <body>
     <div id="root"></div>
+    <!-- Script de redirecionamento básico para SPAs no Netlify caso o arquivo _redirects falhe -->
+    <script>
+      (function() {
+        if (window.location.pathname !== '/' && !window.location.pathname.includes('.')) {
+          // Se não estiver na raiz e não for um arquivo, o React deve assumir
+          console.log('SPA Route detected');
+        }
+      })();
+    </script>
 </body>
 </html>

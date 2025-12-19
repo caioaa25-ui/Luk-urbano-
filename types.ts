@@ -53,9 +53,3 @@ export interface PayoutRequest {
   date: string;
   pixKey: string;
 }
-
-// Added StylistMessage to fix the import error in AIStylist.tsx
-export interface StylistMessage {
-  role: 'user' | 'assistant';
-  content: string;
-}

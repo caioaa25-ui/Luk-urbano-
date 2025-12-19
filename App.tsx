@@ -24,16 +24,21 @@ const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [affiliateId, setAffiliateId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const seller = params.get('ref');
-    if (seller) {
-      setAffiliateId(seller);
-      localStorage.setItem('last_affiliate_id', seller);
-    } else {
-      const stored = localStorage.getItem('last_affiliate_id');
-      if (stored) setAffiliateId(stored);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const seller = params.get('ref');
+      if (seller) {
+        setAffiliateId(seller);
+        localStorage.setItem('last_affiliate_id', seller);
+      } else {
+        const stored = localStorage.getItem('last_affiliate_id');
+        if (stored) setAffiliateId(stored);
+      }
+    } catch (e) {
+      console.error("URL Params Error", e);
     }
   }, []);
 
@@ -95,8 +100,20 @@ const App: React.FC = () => {
 
   const currentSellerName = affiliateId ? (affiliateId === 'partner-id' ? "Consultor VIP" : `Vendedor #${affiliateId}`) : "Loja LookUrbano Oficial";
 
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-ml-gray text-center p-4">
+        <div>
+          <h1 className="text-2xl font-bold text-red-600 mb-2">Ops! Algo deu errado.</h1>
+          <p className="text-gray-600 mb-4">Estamos trabalhando para restaurar o acesso.</p>
+          <button onClick={() => window.location.reload()} className="bg-ml-blue text-white px-6 py-2 rounded-lg">Tentar Novamente</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-[#f5f5f5]">
+    <div className="min-h-screen bg-ml-gray">
       <Navbar 
         onNavigate={setCurrentView} 
         cartCount={cart.reduce((acc, item) => acc + item.quantity, 0)} 
@@ -108,18 +125,18 @@ const App: React.FC = () => {
       
       <main className="pt-[100px] pb-20">
         {currentView === 'home' && (
-          <>
+          <div className="animate-fadeIn">
             <Hero onShopNow={() => setCurrentView('catalog')} />
             <div className="max-w-[1200px] mx-auto px-4 py-8">
               <h2 className="text-xl font-bold text-gray-800 mb-6">Sugestões LookUrbano</h2>
               <ProductList products={MOCK_PRODUCTS} onAddToCart={addToCart} onBuyNow={handleBuyNow} />
             </div>
-          </>
+          </div>
         )}
 
         {currentView === 'catalog' && (
           <div className="max-w-[1200px] mx-auto px-4 py-8 animate-fadeIn">
-            <h1 className="text-2xl font-bold mb-8">Nossa Coleção</h1>
+            <h1 className="text-2xl font-bold mb-8 italic">Nossa Coleção</h1>
             <ProductList products={MOCK_PRODUCTS} onAddToCart={addToCart} onBuyNow={handleBuyNow} />
           </div>
         )}
@@ -127,30 +144,21 @@ const App: React.FC = () => {
         {currentView === 'login' && <Auth mode="login" onSuccess={handleLoginSuccess} onSwitchMode={setCurrentView} />}
         {currentView === 'register' && <Auth mode="register" onSuccess={handleLoginSuccess} onSwitchMode={setCurrentView} />}
         
-        {currentView === 'client-dashboard' && (
-          <ClientDashboard user={user} sellerName={currentSellerName} />
-        )}
-        
-        {currentView === 'partner-dashboard' && (
-          <PartnerDashboard user={user} adminProducts={MOCK_PRODUCTS} />
-        )}
-        
+        {currentView === 'client-dashboard' && <ClientDashboard user={user} sellerName={currentSellerName} />}
+        {currentView === 'partner-dashboard' && <PartnerDashboard user={user} adminProducts={MOCK_PRODUCTS} />}
         {currentView === 'admin-dashboard' && <AdminDashboard />}
-        
-        {currentView === 'checkout' && (
-          <Checkout items={cart} total={cartTotal} onComplete={handleCheckoutComplete} />
-        )}
+        {currentView === 'checkout' && <Checkout items={cart} total={cartTotal} onComplete={handleCheckoutComplete} />}
 
         {currentView === 'success' && (
           <div className="max-w-md mx-auto py-20 text-center px-4 animate-fadeIn">
-            <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 bg-green-100 text-ml-green rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-green-200">
               <i className="fas fa-check text-4xl"></i>
             </div>
-            <h2 className="text-3xl font-bold mb-2">Pedido Recebido!</h2>
-            <p className="text-gray-500 mb-8">Seu pagamento está sendo processado.</p>
+            <h2 className="text-3xl font-black mb-2 italic uppercase tracking-tighter">Pedido Recebido!</h2>
+            <p className="text-gray-500 mb-8 font-medium">Seu pagamento está sendo processado com segurança.</p>
             <div className="flex flex-col gap-3">
-              <button onClick={() => setCurrentView('client-dashboard')} className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg shadow-md">Meus Pedidos</button>
-              <button onClick={() => setCurrentView('home')} className="w-full py-4 bg-white text-gray-700 font-bold rounded-lg border">Continuar Comprando</button>
+              <button onClick={() => setCurrentView('client-dashboard')} className="w-full py-4 bg-ml-blue text-white font-black rounded-lg shadow-md uppercase tracking-widest text-xs">Meus Pedidos</button>
+              <button onClick={() => setCurrentView('home')} className="w-full py-4 bg-white text-gray-700 font-bold rounded-lg border border-gray-200 text-xs uppercase tracking-widest">Início</button>
             </div>
           </div>
         )}
