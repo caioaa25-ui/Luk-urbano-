@@ -4,8 +4,10 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
+// As chaves são lidas apenas de variáveis de ambiente. 
+// NUNCA coloque strings que comecem com "AIza" aqui.
 const firebaseConfig = {
-  apiKey: process.env.API_KEY || "AIza_fallback_only_for_dev",
+  apiKey: process.env.API_KEY || "",
   authDomain: "moda-brasil-9c792.firebaseapp.com",
   projectId: "moda-brasil-9c792",
   storageBucket: "moda-brasil-9c792.appspot.com",
@@ -17,9 +19,8 @@ let app;
 try {
   app = initializeApp(firebaseConfig);
 } catch (e) {
-  console.warn("Firebase Init Warning:", e);
-  // Inicialização vazia para não quebrar o JS
-  app = { }; 
+  console.error("Erro ao inicializar Firebase:", e);
+  app = {};
 }
 
 export const auth = getAuth(app as any);

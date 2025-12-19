@@ -1,1 +1,2 @@
-// Arquivo removido por solicitação do usuário.
+
+export const getStylistAdvice = async () => { return null; };

@@ -7,7 +7,6 @@
     <meta name="theme-color" content="#fff159">
     <title>LookUrbano | Loja Oficial</title>
     
-    <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -32,6 +31,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #f5f5f5;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
         .header-gradient { background-color: #fff159; }
         .card-shadow { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1); }
@@ -58,14 +58,5 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- Script de redirecionamento básico para SPAs no Netlify caso o arquivo _redirects falhe -->
-    <script>
-      (function() {
-        if (window.location.pathname !== '/' && !window.location.pathname.includes('.')) {
-          // Se não estiver na raiz e não for um arquivo, o React deve assumir
-          console.log('SPA Route detected');
-        }
-      })();
-    </script>
 </body>
 </html>
